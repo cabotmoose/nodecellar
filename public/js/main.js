@@ -2,10 +2,10 @@ var AppRouter = Backbone.Router.extend({
 
     routes: {
         ""                  : "home",
-        "wines"	: "list",
-        "wines/page/:page"	: "list",
-        "wines/add"         : "addWine",
-        "wines/:id"         : "wineDetails",
+        "neighborhoods"	: "list",
+        "neighborhoods/page/:page"	: "list",
+        "neighborhoods/add"         : "addNeighborhood",
+        "neighborhoods/:id"         : "neighborhoodDetails",
         "about"             : "about"
     },
 
@@ -24,24 +24,24 @@ var AppRouter = Backbone.Router.extend({
 
 	list: function(page) {
         var p = page ? parseInt(page, 10) : 1;
-        var wineList = new WineCollection();
-        wineList.fetch({success: function(){
-            $("#content").html(new WineListView({model: wineList, page: p}).el);
+        var neighborhoodList = new NeighborhoodCollection();
+        neighborhoodList.fetch({success: function(){
+            $("#content").html(new NeighborhoodListView({model: neighborhoodList, page: p}).el);
         }});
         this.headerView.selectMenuItem('home-menu');
     },
 
-    wineDetails: function (id) {
-        var wine = new Wine({_id: id});
-        wine.fetch({success: function(){
-            $("#content").html(new WineView({model: wine}).el);
+    neighborhoodDetails: function (id) {
+        var neighborhood = new Neighborhood({_id: id});
+        neighborhood.fetch({success: function(){
+            $("#content").html(new NeighborhoodView({model: neighborhood}).el);
         }});
         this.headerView.selectMenuItem();
     },
 
-	addWine: function() {
-        var wine = new Wine();
-        $('#content').html(new WineView({model: wine}).el);
+	addNeighborhood: function() {
+        var neighborhood = new Neighborhood();
+        $('#content').html(new NeighborhoodView({model: neighborhood}).el);
         this.headerView.selectMenuItem('add-menu');
 	},
 
@@ -55,7 +55,7 @@ var AppRouter = Backbone.Router.extend({
 
 });
 
-utils.loadTemplate(['HomeView', 'HeaderView', 'WineView', 'WineListItemView', 'AboutView'], function() {
+utils.loadTemplate(['HomeView', 'HeaderView', 'NeighborhoodView', 'NeighborhoodListItemView', 'AboutView'], function() {
     app = new AppRouter();
     Backbone.history.start();
 });
